@@ -1,0 +1,13 @@
+.rdp {
+    --rdp-cell-size: 40px;
+    --rdp-accent-color: #593c90;
+    --rdp-background-color: #414052;
+    --rdp-accent-color-dark: #593c90;
+    --rdp-background-color-dark: #414052;
+    --rdp-outline: 2px solid var(--rdp-accent-color);
+    /* Outline border for focused elements */
+    --rdp-outline-selected: 3px solid var(--rdp-accent-color);
+    /* Outline border for focused _and_ selected elements */
+
+    margin: 1em;
+}
