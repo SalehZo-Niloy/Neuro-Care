@@ -14,12 +14,12 @@ const Register = () => {
 
 
     const handleSignUp = data => {
-        console.log(data);
+        // console.log(data);
 
         signup(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
+                // console.log(user);
                 setSignupError('');
                 notify();
 
@@ -28,17 +28,35 @@ const Register = () => {
                 }
                 profileUpdater(userInfo)
                     .then(() => {
-                        console.log('Name updated');
-                        navigate('/');
+                        saveUser(data.name, data.email);
                     })
                     .catch(e => {
-                        console.log(e);
+                        console.error(e);
                     })
             })
             .catch(e => {
                 console.error(e);
                 setSignupError(e.message);
 
+            })
+    };
+
+    const saveUser = (name, email) => {
+        const user = { name, email };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                navigate('/');
+            })
+            .catch(e => {
+                console.error(e);
             })
     };
 
