@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import Loading from '../../shared/Loading/Loading';
 
 const AddDoctor = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
 
     const imgbbKey = process.env.REACT_APP_imgbb_key;
 
@@ -31,7 +34,30 @@ const AddDoctor = () => {
             .then(imgData => {
                 // console.log(imgData);
                 if (imgData.success) {
-                    console.log(imgData.data.url);
+                    // console.log(imgData.data.url);
+                    const doctor = {
+                        name: data.name,
+                        email: data.email,
+                        specialty: data.specialty,
+                        photo: imgData.data.url
+                    }
+
+                    fetch('http://localhost:5000/doctors', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                            authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(doctor)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            if (data.acknowledged) {
+                                toast.success(`${data.name} added as a Doctor`);
+                                navigate('/dashboard/manageDoctors');
+                            }
+                        })
                 }
             })
             .catch(e => {

@@ -31,6 +31,9 @@ const DashboardLayout = () => {
                         {
                             isAdmin ? <li className='mt-2'><Link to='/dashboard/addDoctor'>Add Doctor</Link></li> : undefined
                         }
+                        {
+                            isAdmin ? <li className='mt-2'><Link to='/dashboard/manageDoctors'>Manage Doctors</Link></li> : undefined
+                        }
                     </ul>
 
                 </div>
