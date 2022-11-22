@@ -17,6 +17,7 @@ const Register = () => {
 
     if (token) {
         return <Navigate to='/'></Navigate>
+        // return navigate('/');
     }
 
     const handleSignUp = data => {
