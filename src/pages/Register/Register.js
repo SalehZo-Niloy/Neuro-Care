@@ -52,13 +52,26 @@ const Register = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                navigate('/');
+                // console.log(data);
+                createToken(email);
             })
             .catch(e => {
                 console.error(e);
             })
     };
+
+    const createToken = (email) => {
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                localStorage.setItem('accessToken', data.accessToken);
+                navigate('/');
+            })
+            .catch(e => {
+                console.error(e);
+            })
+    }
 
     const notify = () => toast.success('Sign Up successful');
 
