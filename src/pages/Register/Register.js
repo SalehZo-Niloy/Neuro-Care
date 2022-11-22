@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 import toast from 'react-hot-toast';
+import useToken from '../../hooks/useToken';
 
 
 
@@ -10,8 +11,13 @@ const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { signup, profileUpdater } = useContext(AuthContext);
     const [signupError, setSignupError] = useState('');
-    const navigate = useNavigate();
+    const [userEmail, setUserEmail] = useState('');
+    const [token] = useToken(userEmail);
+    // const navigate = useNavigate();
 
+    if (token) {
+        return <Navigate to='/'></Navigate>
+    }
 
     const handleSignUp = data => {
         // console.log(data);
@@ -53,25 +59,12 @@ const Register = () => {
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
-                createToken(email);
+                setUserEmail(email);
             })
             .catch(e => {
                 console.error(e);
             })
     };
-
-    const createToken = (email) => {
-        fetch(`http://localhost:5000/jwt?email=${email}`)
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data);
-                localStorage.setItem('accessToken', data.accessToken);
-                navigate('/');
-            })
-            .catch(e => {
-                console.error(e);
-            })
-    }
 
     const notify = () => toast.success('Sign Up successful');
 
