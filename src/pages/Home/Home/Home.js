@@ -13,10 +13,10 @@ const Home = () => {
             <Services></Services>
             <MakeAppointment></MakeAppointment>
             <Testimonials></Testimonials>
-            <button className='bg-primary w-8 p-32'>hey</button>
+            {/* <button className='bg-primary w-8 p-32'>hey</button>
             <button className='bg-secondary w-8 p-32'>hey</button>
             <button className='bg-accent w-8 p-32'>hey</button>
-            <button className='bg-neutral w-8 p-32'>hey</button>
+            <button className='bg-neutral w-8 p-32'>hey</button> */}
         </div>
     );
 };
