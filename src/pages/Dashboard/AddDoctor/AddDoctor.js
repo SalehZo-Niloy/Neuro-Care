@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Loading from '../../shared/Loading/Loading';
 
 const AddDoctor = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
 
     const imgbbKey = process.env.REACT_APP_imgbb_key;
@@ -20,8 +20,9 @@ const AddDoctor = () => {
         }
     })
 
-    const handleAddDoctor = (data) => {
+    const handleAddDoctor = (data, e) => {
         const photo = data.photo[0];
+        const name = data.name;
         // console.log(photo);
         const formData = new FormData();
         formData.append('image', photo);
@@ -54,7 +55,8 @@ const AddDoctor = () => {
                         .then(data => {
                             console.log(data);
                             if (data.acknowledged) {
-                                toast.success(`${data.name} added as a Doctor`);
+                                toast.success(`${name} added as a Doctor`);
+                                e.target.reset();
                                 navigate('/dashboard/manageDoctors');
                             }
                         })
